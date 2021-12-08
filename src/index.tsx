@@ -1,21 +1,26 @@
+// Vendor
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { store } from './app/store';
+// Redux
+import { store } from './redux/store';
 import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
+// Redux-persist
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+// Custom
+import './styles/global.css';
+import App from './App';
+
+let persistor = persistStore(store)
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+	<React.StrictMode>
+		<Provider store={store}>
+			<PersistGate persistor={persistor}>
+				<App />
+			</PersistGate>
+		</Provider>
+	</React.StrictMode>,
+	document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
